@@ -1,10 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Lotto Rush</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lotto Rush | Official Demo</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Lotto Rush</h1>
-  <p>Welcome to Lotto Rush.</p>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="#" class="logo">
+        <span>Lotto</span> Rush
+      </a>
+
+      <div class="nav-links">
+        <a href="#play">Play</a>
+        <a href="#draws">Draws</a>
+        <a href="#prizes">Prizes</a>
+        <a href="#rules">Rules</a>
+        <a href="#responsible">Responsible Play</a>
+      </div>
+
+      <a href="#play" class="nav-button">Try Demo</a>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Fictional lottery demo experience</p>
+        <h1>Pick your numbers. Feel the <span>Rush.</span></h1>
+        <p class="hero-text">
+          A bold, fast, neon-inspired lottery concept with number picking,
+          draw information, prize tiers, and a clean modern ticket experience.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#play" class="primary-btn">Pick Numbers</a>
+          <a href="#draws" class="secondary-btn">View Next Draw</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <strong>$5,000,000</strong>
+            <span>Top Prize Demo</span>
+          </div>
+          <div>
+            <strong>Pick 5</strong>
+            <span>Numbers from 1–40</span>
+          </div>
+          <div>
+            <strong>Bonus</strong>
+            <span>Rush Bonus 1–20</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-card">
+        <div class="ticket-top">
+          <div>
+            <p>Top Prize</p>
+            <h2>$5,000,000</h2>
+          </div>
+          <span class="burst">Big Dreams<br>Bigger Wins</span>
+        </div>
+
+        <h3><span>Lotto</span> Rush</h3>
+        <p class="ticket-subtitle">Pick 5 numbers + Rush Bonus</p>
+
+        <div class="mini-grid" id="heroMiniGrid"></div>
+
+        <div class="ticket-footer">
+          <span>Next Draw</span>
+          <strong id="heroDrawDate">Friday 9:00 PM</strong>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="section draw-strip" id="draws">
+      <div>
+        <p class="eyebrow">Next Draw</p>
+        <h2 id="nextDrawTitle">Friday, 9:00 PM</h2>
+        <p>Demo countdown for the next Lotto Rush draw.</p>
+      </div>
+
+      <div class="countdown" id="countdown">
+        <div><strong>00</strong><span>Days</span></div>
+        <div><strong>00</strong><span>Hours</span></div>
+        <div><strong>00</strong><span>Mins</span></div>
+        <div><strong>00</strong><span>Secs</span></div>
+      </div>
+    </section>
+
+    <section class="section play-section" id="play">
+      <div class="section-heading">
+        <p class="eyebrow">Play Demo</p>
+        <h2>Build Your Lotto Rush Ticket</h2>
+        <p>
+          Choose 5 main numbers from 1–40 and 1 Rush Bonus number from 1–20.
+          This is a front-end demo only. No real purchase is made.
+        </p>
+      </div>
+
+      <div class="play-layout">
+        <div class="number-picker">
+          <div class="picker-header">
+            <h3>Main Numbers</h3>
+            <span id="mainCounter">0 / 5 selected</span>
+          </div>
+          <div class="number-grid" id="mainNumbers"></div>
+
+          <div class="picker-header bonus-header">
+            <h3>Rush Bonus</h3>
+            <span id="bonusCounter">0 / 1 selected</span>
+          </div>
+          <div class="number-grid bonus-grid" id="bonusNumbers"></div>
+
+          <div class="picker-actions">
+            <button id="quickPickBtn">Quick Pick</button>
+            <button id="clearBtn">Clear</button>
+          </div>
+        </div>
+
+        <aside class="ticket-summary">
+          <p class="eyebrow">Your Ticket</p>
+          <h3>Lotto Rush Entry</h3>
+
+          <div class="summary-box">
+            <span>Main Numbers</span>
+            <strong id="selectedMain">None selected</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>Rush Bonus</span>
+            <strong id="selectedBonus">None selected</strong>
+          </div>
+
+          <div class="summary-price">
+            <span>Demo Ticket Price</span>
+            <strong>$5.00</strong>
+          </div>
+
+          <button id="demoBuyBtn" class="buy-btn">Demo Checkout</button>
+
+          <p class="small-note">
+            Stripe/payment is not connected. Real-money lottery sales require licensing,
+            age verification, legal rules, and secure backend systems.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="prizes">
+      <div class="section-heading">
+        <p class="eyebrow">Prize Breakdown</p>
+        <h2>Demo Prize Tiers</h2>
+        <p>
+          These amounts are placeholder demo values only. Real lottery prize pools
+          must be calculated from actual sales, regulations, odds, taxes, and approved rules.
+        </p>
+      </div>
+
+      <div class="prize-table">
+        <div class="table-row table-head">
+          <span>Match</span>
+          <span>Demo Prize</span>
+          <span>Odds Style</span>
+        </div>
+        <div class="table-row">
+          <span>5 + Rush Bonus</span>
+          <span>$5,000,000</span>
+          <span>Grand Prize</span>
+        </div>
+        <div class="table-row">
+          <span>5 Numbers</span>
+          <span>$100,000</span>
+          <span>Major Prize</span>
+        </div>
+        <div class="table-row">
+          <span>4 + Rush Bonus</span>
+          <span>$1,000</span>
+          <span>High Tier</span>
+        </div>
+        <div class="table-row">
+          <span>4 Numbers</span>
+          <span>$100</span>
+          <span>Medium Tier</span>
+        </div>
+        <div class="table-row">
+          <span>3 Numbers</span>
+          <span>$10</span>
+          <span>Small Win</span>
+        </div>
+        <div class="table-row">
+          <span>Rush Bonus Only</span>
+          <span>Free Play</span>
+          <span>Bonus Reward</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section checker-section">
+      <div class="section-heading">
+        <p class="eyebrow">Number Checker</p>
+        <h2>Check Demo Results</h2>
+        <p>
+          Generate fictional winning numbers and compare them to your selected ticket.
+        </p>
+      </div>
+
+      <div class="checker-card">
+        <button id="generateDrawBtn">Generate Demo Draw</button>
+
+        <div class="draw-results">
+          <div>
+            <span>Winning Numbers</span>
+            <strong id="winningNumbers">Not drawn yet</strong>
+          </div>
+          <div>
+            <span>Rush Bonus</span>
+            <strong id="winningBonus">Not drawn yet</strong>
+          </div>
+          <div>
+            <span>Result</span>
+            <strong id="matchResult">Pick numbers first</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section rules-grid" id="rules">
+      <div class="info-card">
+        <h3>How to Play</h3>
+        <p>Pick 5 numbers from 1–40, then pick 1 Rush Bonus number from 1–20.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Draw Times</h3>
+        <p>Demo draws are shown as Friday and Tuesday at 9:00 PM.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Quick Pick</h3>
+        <p>Use Quick Pick to randomly generate a full ticket instantly.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Demo Only</h3>
+        <p>This site is a concept layout, not a real lottery or payment system.</p>
+      </div>
+    </section>
+
+    <section class="section responsible" id="responsible">
+      <p class="eyebrow">Responsible Play</p>
+      <h2>Play should stay safe, legal, and controlled.</h2>
+      <p>
+        This demo does not sell real tickets. A real lottery platform needs strict
+        age checks, spending limits, legal approval, secure payments, transparent odds,
+        and support resources for risky gambling behavior.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <h3><span>Lotto</span> Rush</h3>
+      <p>Fictional lottery website demo. No real-money tickets are sold.</p>
+    </div>
+
+    <p>© 2026 Lotto Rush Demo. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
