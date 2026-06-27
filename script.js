@@ -13,16 +13,31 @@ const winningBonusEl = document.getElementById("winningBonus");
 const matchResultEl = document.getElementById("matchResult");
 const countdownEl = document.getElementById("countdown");
 const heroMiniGrid = document.getElementById("heroMiniGrid");
+const ageModal = document.getElementById("ageModal");
+const enterSiteBtn = document.getElementById("enterSiteBtn");
+const toast = document.getElementById("toast");
+const openPreviewBtn = document.getElementById("openPreviewBtn");
+const closePreviewBtn = document.getElementById("closePreviewBtn");
+const ticketPreviewModal = document.getElementById("ticketPreviewModal");
 
 let selectedMain = [];
 let selectedBonus = null;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
 
 function createNumberButtons() {
   for (let i = 1; i <= 40; i++) {
     const button = document.createElement("button");
     button.className = "number-btn";
     button.textContent = i;
-    button.addEventListener("click", () => toggleMainNumber(i, button));
+    button.addEventListener("click", () => toggleMainNumber(i));
     mainNumbersEl.appendChild(button);
   }
 
@@ -40,7 +55,7 @@ function createHeroMiniGrid() {
 
   demoNumbers.forEach((num) => {
     const ball = document.createElement("span");
-    ball.textContent = num;
+    ball.textContent = String(num).padStart(2, "0");
     heroMiniGrid.appendChild(ball);
   });
 }
@@ -50,13 +65,15 @@ function toggleMainNumber(number) {
 
   if (isSelected) {
     selectedMain = selectedMain.filter((item) => item !== number);
+    showToast(`Removed ${number}`);
   } else {
     if (selectedMain.length >= 5) {
-      alert("You can only pick 5 main numbers.");
+      showToast("Only 5 main numbers allowed.");
       return;
     }
 
     selectedMain.push(number);
+    showToast(`Added ${number}`);
   }
 
   selectedMain.sort((a, b) => a - b);
@@ -65,6 +82,7 @@ function toggleMainNumber(number) {
 
 function selectBonusNumber(number) {
   selectedBonus = selectedBonus === number ? null : number;
+  showToast(selectedBonus ? `Rush Bonus set to ${number}` : "Rush Bonus cleared.");
   updateUI();
 }
 
@@ -80,10 +98,10 @@ function updateUI() {
   });
 
   selectedMainEl.textContent =
-    selectedMain.length > 0 ? selectedMain.join(", ") : "None selected";
+    selectedMain.length > 0 ? selectedMain.map(n => String(n).padStart(2, "0")).join(", ") : "None selected";
 
   selectedBonusEl.textContent =
-    selectedBonus !== null ? selectedBonus : "None selected";
+    selectedBonus !== null ? String(selectedBonus).padStart(2, "0") : "None selected";
 
   mainCounterEl.textContent = `${selectedMain.length} / 5 selected`;
   bonusCounterEl.textContent = `${selectedBonus === null ? 0 : 1} / 1 selected`;
@@ -107,6 +125,7 @@ function quickPick() {
   selectedMain = getRandomUniqueNumbers(40, 5);
   selectedBonus = getRandomUniqueNumbers(20, 1)[0];
   updateUI();
+  showToast("Quick Pick ticket generated.");
 }
 
 function clearTicket() {
@@ -116,11 +135,12 @@ function clearTicket() {
   winningBonusEl.textContent = "Not drawn yet";
   matchResultEl.textContent = "Pick numbers first";
   updateUI();
+  showToast("Ticket cleared.");
 }
 
 function generateDemoDraw() {
   if (selectedMain.length !== 5 || selectedBonus === null) {
-    alert("Pick 5 main numbers and 1 Rush Bonus number first.");
+    showToast("Pick 5 numbers and 1 Rush Bonus first.");
     return;
   }
 
@@ -133,10 +153,11 @@ function generateDemoDraw() {
 
   const bonusMatch = selectedBonus === winningBonus;
 
-  winningNumbersEl.textContent = winningMain.join(", ");
-  winningBonusEl.textContent = winningBonus;
-
+  winningNumbersEl.textContent = winningMain.map(n => String(n).padStart(2, "0")).join(", ");
+  winningBonusEl.textContent = String(winningBonus).padStart(2, "0");
   matchResultEl.textContent = getPrizeMessage(mainMatches, bonusMatch);
+
+  showToast("Demo draw complete.");
 }
 
 function getPrizeMessage(mainMatches, bonusMatch) {
@@ -151,18 +172,22 @@ function getPrizeMessage(mainMatches, bonusMatch) {
 
 function demoCheckout() {
   if (selectedMain.length !== 5 || selectedBonus === null) {
-    alert("Pick 5 main numbers and 1 Rush Bonus number before checkout.");
+    showToast("Complete your ticket first.");
     return;
   }
 
-  alert(
-    "Demo checkout only. Real Stripe payments for lottery tickets need licensing, age verification, a secure backend, and legal approval."
-  );
+  showToast("Demo checkout opened.");
+
+  setTimeout(() => {
+    alert(
+      "Demo checkout only. Real lottery payments require licensing, age verification, legal approval, and a secure backend."
+    );
+  }, 350);
 }
 
 function getNextDrawDate() {
   const now = new Date();
-  const drawDays = [2, 5]; 
+  const drawDays = [2, 5];
   const drawHour = 21;
 
   let nextDraw = null;
@@ -198,6 +223,33 @@ function updateCountdown() {
   });
 }
 
+function setupFAQ() {
+  document.querySelectorAll(".faq-item button").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.parentElement.classList.toggle("active");
+    });
+  });
+}
+
+enterSiteBtn.addEventListener("click", () => {
+  ageModal.classList.add("hidden");
+  showToast("Welcome to Lotto Rush.");
+});
+
+openPreviewBtn.addEventListener("click", () => {
+  ticketPreviewModal.classList.add("show");
+});
+
+closePreviewBtn.addEventListener("click", () => {
+  ticketPreviewModal.classList.remove("show");
+});
+
+ticketPreviewModal.addEventListener("click", (event) => {
+  if (event.target === ticketPreviewModal) {
+    ticketPreviewModal.classList.remove("show");
+  }
+});
+
 quickPickBtn.addEventListener("click", quickPick);
 clearBtn.addEventListener("click", clearTicket);
 demoBuyBtn.addEventListener("click", demoCheckout);
@@ -205,6 +257,7 @@ generateDrawBtn.addEventListener("click", generateDemoDraw);
 
 createNumberButtons();
 createHeroMiniGrid();
+setupFAQ();
 updateUI();
 updateCountdown();
 setInterval(updateCountdown, 1000);
